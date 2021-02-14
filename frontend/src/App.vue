@@ -1,12 +1,38 @@
 <script>
 import Search from '@/components/Search.vue'
 import Weather from '@/components/Weather.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name:"app",
   components:{
     Search,
     Weather
+  },
+  data(){
+    return{
+      errorMessage: "",
+      weather: {}
+    }
+  },
+  mounted(){
+    window.navigator.geolocation.getCurrentPosition(
+      (position)=>{
+        const longitude = position.coords.longitude
+        const latitude  = position.coords.latitude
+         this.handleFetchWeathers(latitude,longitude)
+      },
+      (err)=>{
+        this.error = err
+      }
+    )
+  },
+  methods:{
+    ...mapActions(['fetchWeather']),
+    async handleFetchWeathers(lat,lon){
+        this.weather = await this.fetchWeather({lat,lon})
+        console.log(this.weather)
+      }
   }
 }
 </script>
