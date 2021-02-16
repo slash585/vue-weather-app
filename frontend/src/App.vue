@@ -20,7 +20,7 @@ export default {
       (position)=>{
         const longitude = position.coords.longitude
         const latitude  = position.coords.latitude
-         this.handleFetchWeathers(latitude,longitude)
+         this.fetchWeathers(latitude,longitude)
       },
       (err)=>{
         this.error = err
@@ -28,11 +28,14 @@ export default {
     )
   },
   methods:{
-    ...mapActions(['fetchWeather']),
-    async handleFetchWeathers(lat,lon){
+    ...mapActions(['fetchWeather','handleFetchWeather']),
+    async fetchWeathers(lat,lon){
         this.weather = await this.fetchWeather({lat,lon})
         console.log(this.weather)
-      }
+    },
+    async handleSearch(query){
+      this.weather = await this.handleFetchWeather(query)
+    }
   }
 }
 </script>
@@ -40,7 +43,7 @@ export default {
 <template lang="pug">
   #app
     main
-      Search
+      Search(v-on:SearchRequested="handleSearch")
       Weather(:weather="weather")
 </template>
 
@@ -59,20 +62,12 @@ body{
 }
 
 #app {
-  background-image: url('./assets/cold-bg.jpg');
-  background-size: cover;
-  background-position: bottom;
-  transition: 0.4;
-}
-
-#app.warm {
-  background-image: url('./assets/warm-bg.jpg');
+  background-color: #DB524D;
 }
 
 main{
   min-height: 100vh;
   padding: 25px;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75));
 }
 
 

@@ -7,8 +7,8 @@ export default {
         }
     },
     methods:{
-        fetchWeather(){
-            console.log(this.query)
+        handleSearch(){
+            this.$emit('SearchRequested',this.query)
         }
     }
 }
@@ -17,7 +17,7 @@ export default {
 <template lang="pug">
 .search
   .search-box
-    input.search-bar(type="text" placeholder="Search..." v-model="query" @keypress.enter="fetchWeather")
+    input.search-bar(type="text" placeholder="Search..." v-model="query" @keypress.enter="handleSearch")
 </template>
 
 <style lang="scss" scoped>
