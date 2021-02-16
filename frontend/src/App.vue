@@ -41,7 +41,7 @@ export default {
   #app
     main
       Search
-      Weather
+      Weather(:weather="weather")
 </template>
 
 <style lang="scss">

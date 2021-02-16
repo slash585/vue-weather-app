@@ -1,17 +1,32 @@
 <script>
 export default {
-    name: 'weather'
+    name: 'weather',
+    props: ['weather'],
+    methods:{
+        dateBuilder(){
+            let d = new Date()
+            let months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
+            let days = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"]
+
+            let day = days[d.getDay()]
+            let date = d.getDate()
+            let month = months[d.getMonth()]
+            let year = d.getFullYear()
+
+            return `${day} ${date} ${month} ${year}`
+        }
+    }
 }
 </script>
 
 <template lang="pug">
 .weather-wrap
   .location-box
-    .location asdasd
-    .date 14.04.1996
+    .location {{ weather.data.name }}, {{ weather.data.sys.country }}
+    .date {{dateBuilder()}}
   .weather-box
-    .temp asdasd
-    .weather asdassd
+    .temp {{ Math.round(weather.data.main.temp) }}°c
+
 
 </template>
 
